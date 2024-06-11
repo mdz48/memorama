@@ -1,27 +1,42 @@
 export const data = [
     {
-        id: 1,
-        img: "estrella.png",
+        id: 10,
+        name: "estrella",
+        front: '/img/front',
+        img: '/img/estrella.png',
+        alt: "Imagen estrella",
         state: false
     },
     {
-        id: 2,
-        img: "fantasmita.png",
+        id: 20,
+        name: "fantasmita",
+        front: '/img/front',
+        img: "/img/fantasmita.png",
+        alt: "Imagen fantasma",
         state: false
     },
     {
-        id: 3,
-        img: "gameboy.png",
+        id: 30,
+        name: "gameboy",
+        front: '/img/front',
+        img: "/img/gameboy.png",
+        alt: "Imagen gameboy",
         state: false
     },
     {
-        id: 4,
-        img: "pacman.png",
+        id: 40,
+        name: "pacman",
+        front: '/img/front',
+        img: "/img/pacman.png",
+        alt: "Imagen pacman",
         state: false
     },
     {
-        id: 5,
-        img: "regalo.png",
+        id: 50,
+        name: "regalo",
+        front: '/img/front',
+        img: "/img/regalo.png",
+        alt: "Imagen regalo",
         state: false
     },
 ]
