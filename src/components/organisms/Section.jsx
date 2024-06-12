@@ -1,47 +1,91 @@
-import React from 'react'
-import { data } from '../../data/mysql'
+import React, { useState, useEffect } from 'react';
+import { data } from '../../data/mysql';
 import Card from '../atoms/Card';
-import { useState } from 'react';
 import './Section.css';
 
-
 export default function Section() {
+    const [cards, setCards] = useState([]);
+    const [flippedCards, setFlippedCards] = useState([]);
+    const [matchedCards, setMatchedCards] = useState([]);
 
-    const [cards, setCards] = useState ([]);
-
-    const handleClickButton = (e) => {
-            const aux = data.map(card => <Card img={card.img} state={card.state} alt={card.alt} name={card.name} front={card.front} isFlipped={false} />)
-            // const aux1 = data.map((card, i) => <Card img={card.img} key={i} state={card.state} alt={card.alt} name={card.name} front={card.front} />)
-            const double = (aux.concat(aux))
+    const handleClickButton = () => {
+        const aux = data.map((card, i) => ({ ...card, id: i, isFlipped: false }));
+        const double = [...aux, ...aux].map((card, i) => ({ ...card, uniqueId: i }));
         setCards(shuffleArray(double));
-    }
+        setFlippedCards([]);
+        setMatchedCards([]);
+    };
 
-    const handleClickCard = (e) => {
-        
-    }
+    const handleClickCard = (id) => {
+        if (flippedCards.length < 2 && !flippedCards.includes(id) && !matchedCards.includes(id)) {
+            setCards(prevCards => prevCards.map(card => {
+                if (card.uniqueId === id) {
+                    return { ...card, isFlipped: true };
+                } else {
+                    return card;
+                }
+            }));
+            setFlippedCards([...flippedCards, id]);
+        }
+    };
+
+    useEffect(() => {
+        if (flippedCards.length === 2) {
+            const [firstId, secondId] = flippedCards;
+
+            let firstCard = null;
+            let secondCard = null;
+            for (let i = 0; i < cards.length; i++) {
+                if (cards[i].uniqueId === firstId) {
+                    firstCard = cards[i];
+                } else if (cards[i].uniqueId === secondId) {
+                    secondCard = cards[i];
+                }
+                if (firstCard && secondCard) {
+                    i = cards.length;
+                }
+            }
+
+            if (firstCard.id === secondCard.id) {
+                setMatchedCards([...matchedCards, firstId, secondId]);
+                setFlippedCards([]);
+            } else {
+                setTimeout(() => {
+                    setCards(prevCards => prevCards.map(card => {
+                        if (card.uniqueId === firstId || card.uniqueId === secondId) {
+                            return { ...card, isFlipped: false };
+                        } else {
+                            return card;
+                        }
+                    }));
+                    setFlippedCards([]);
+                }, 1000);
+            }
+        }
+    }, [flippedCards, cards, matchedCards]);
 
     const shuffleArray = (array) => {
         for (let i = array.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [array[i], array[j]] = [array[j], array[i]];
-        }   
-        return array;
-      }
-
-      
-
-
-  return (
-    <>
-    <div id="hearder">
-        <button onClick={handleClickButton}>Empezar Juego</button>
-    </div>
-    <div id="board">
-        {/* {cards} */}
-        {
-            cards.map((item, i) => <button onClick={handleClickCard} key={i}>{item}</button>)
         }
-    </div>
-    </>
-  )
+        return array;
+    };
+
+    return (
+        <>
+            <div id="header">
+                <button onClick={handleClickButton}>Empezar Juego</button>
+            </div>
+            <div id="board">
+                {cards.map((item) => (
+                    <Card 
+                        key={item.uniqueId} 
+                        card={item} 
+                        onClick={() => handleClickCard(item.uniqueId)} 
+                    />
+                ))}
+            </div>
+        </>
+    );
 }
