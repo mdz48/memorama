@@ -75,7 +75,7 @@ export default function Section() {
     return (
         <>
             <div id="header">
-                <button onClick={handleClickButton}>Empezar Juego</button>
+                <button className='button-8' onClick={handleClickButton}>Empezar Juego</button>
             </div>
             <div id="board">
                 {cards.map((item) => (

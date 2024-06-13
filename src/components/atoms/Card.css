@@ -1,9 +1,11 @@
 #card {
-    /* width: 100px; */
-    /* height: 150px; */
     perspective: 1000px;
     cursor: pointer;
     margin: 10px;
+    background-color: #395b64;
+    padding: 10px;
+    border-radius: 10px;
+    
 }
 
 #card img {
@@ -16,3 +18,23 @@
 #card.flipped img {
     transform: rotateY(180deg);
 }
+
+#card-flipped  {
+    perspective: 1000px;
+    cursor: pointer;
+    margin: 10px;
+    background-color: #395b64;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+#card:hover {
+    box-shadow: #2c3333 0 8px 15px;
+}
+
+#card-flipped:hover {
+    box-shadow: #2c3333 0 8px 15px;
+
+}
+
+

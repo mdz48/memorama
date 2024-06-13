@@ -6,3 +6,7 @@
     justify-content: center;
     align-items: center;
 }
+
+body {
+    background-color: #e7f6f2; /* gris oscuro */
+}

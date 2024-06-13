@@ -4,7 +4,7 @@ import './Card.css';
 export default function Card({ card, onClick }) {
     let cardClass = "card";
     if (card.isFlipped) {
-        cardClass += " flipped";
+        cardClass += "-flipped";
     }
 
     let cardImage;
